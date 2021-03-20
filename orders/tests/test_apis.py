@@ -1,3 +1,5 @@
+import json
+
 from rest_framework import status
 from rest_framework.test import APITransactionTestCase
 
@@ -23,3 +25,13 @@ class TestThis(APITransactionTestCase):
         response = self.client.get(path='/api/get_total_revenue', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, 'total__sum')
+
+    # def test_api_can_purchase_product(self):
+    #     data = {
+    #         "qty": 1,
+    #         "customer": 9,
+    #         "product": 1
+    #     }
+    #     response = self.client.post(path='/api/purchase_product', data=data)
+    #     print(response.status_code)
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
