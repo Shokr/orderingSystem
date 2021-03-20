@@ -1,5 +1,6 @@
 import pytest
 from django.test import RequestFactory
+from rest_framework.test import APIClient
 
 from config import settings
 from users.tests.factories import UserFactory
@@ -18,3 +19,8 @@ def user() -> settings.AUTH_USER_MODEL:
 @pytest.fixture
 def request_factory() -> RequestFactory:
     return RequestFactory()
+
+
+@pytest.fixture
+def api_client():
+    return APIClient

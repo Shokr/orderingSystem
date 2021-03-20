@@ -20,7 +20,7 @@ class PurchasedProductsViewSet(ListAPIView):
 
     def list(self, request):
         queryset = Product.objects.filter(product__customer_id=request.user.pk)
-        print("queryset:- ", queryset)
+        # print("queryset:- ", queryset)
         serializer = ProductSerializer(queryset, many=True, context={'request': request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)
 
