@@ -12,11 +12,7 @@ from users.models import User, Customer, Admin
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["username", "name", "url", "type", "currency"]
-
-        extra_kwargs = {
-            "url": {"view_name": "api:user-detail", "lookup_field": "username"}
-        }
+        fields = ["pk", "username", "type", "email", "currency", "is_staff", "is_superuser", "first_name", "last_name"]
 
 
 class AdminSerializer(serializers.ModelSerializer):

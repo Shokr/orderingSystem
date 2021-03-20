@@ -21,6 +21,7 @@ class Product(Model):
     description = TextField(blank=True)
 
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
+    customer_price = CharField(max_length=50, null=True, blank=True)
 
     charge_taxes = BooleanField(default=True)
 

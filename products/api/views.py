@@ -1,11 +1,20 @@
 from rest_framework import permissions, viewsets
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication, TokenAuthentication
+from rest_framework.response import Response
 
 from .serializers import Product, ProductSerializer
+
+from users.models import User
+
+from djmoney.money import Money
+from djmoney.contrib.exchange.models import convert_money
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
+    ProductViewSet:
+        Admin Api to deal with products.
+
     retrieve:
     Allows admin user to retrieve the given Product.
 
@@ -37,8 +46,38 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class AllProductsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    AllProductsViewSet:
+        Customer Api to deal with products.
 
-    queryset = Product.objects.get_queryset()
-    serializer_class = ProductSerializer
+        retrieve:
+            Allows user to retrieve the given Product.
+
+        list:
+            Allows user to retrieve a list of all Products that exist
+    """
     authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated, ]
+
+    serializer_class = ProductSerializer
+
+    # queryset = Product.objects.get_queryset()
+
+    def get_queryset(self):
+        user_currency = User.objects.filter(pk=self.request.user.id).values_list('currency')
+        user_currency = user_currency[0][0]
+        print(user_currency)
+
+        queryset = Product.objects.get_queryset()
+
+        for product in queryset:
+            pk = product.pk
+            price = product.price
+            print(pk, price)
+
+            converted_price = str(convert_money(price, user_currency))
+            print(converted_price)
+
+            Product.objects.filter(pk=pk).update(customer_price=converted_price)
+
+        return queryset

@@ -189,7 +189,7 @@ LOGGING = {
         }
     },
     'loggers': {
-        'django': {
+        'django.request': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,
@@ -210,11 +210,11 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
+        'rest_framework.throttling.UserRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '5/minute',
-        'user': '5/minute'
+        'user': '5/minute',
     },
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -245,3 +245,16 @@ CURRENCY_CHOICES = [('USD', 'USD $'), ('EUR', 'EUR €')]
 EXCHANGE_BACKEND = 'djmoney.contrib.exchange.backends.FixerBackend'
 
 FIXER_ACCESS_KEY = '0636da3b0c32fde24f84a0e2d7e4795f'
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        },
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}

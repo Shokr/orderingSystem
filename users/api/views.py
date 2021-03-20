@@ -1,31 +1,34 @@
-from django.contrib.auth import get_user_model
-from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework import status, permissions, viewsets
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
 
-from rest_framework.authtoken.models import Token
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.generics import RetrieveDestroyAPIView
-from .serializers import UserSerializer, UserRegistrationSerializer, UserLoginSerializer, TokenSerializer
-
-User = get_user_model()
+from .serializers import *
 
 
-class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    retrieve:
+    Allows admin user to retrieve the given User.
 
-    serializer_class = UserSerializer
+    list:
+    Allows admin user to retrieve a list of all Users that exist
+
+    create:
+    Allows admin user to create a User to a normal user
+
+    update:
+    Allows admin user to modify a User that already exists
+
+    destroy:
+    Allows admin user to delete a User that already exists
+    """
+
     queryset = User.objects.all()
-    lookup_field = "username"
-
-    def get_queryset(self, *args, **kwargs):
-        return self.queryset.filter(id=self.request.user.id)
-
-    @action(detail=False, methods=["GET"])
-    def me(self, request):
-        serializer = UserSerializer(request.user, context={"request": request})
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
+    serializer_class = UserSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
+    permission_classes = [permissions.IsAdminUser, ]
 
 
 class UserRegistrationAPIView(CreateAPIView):

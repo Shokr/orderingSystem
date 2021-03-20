@@ -1,0 +1,9 @@
+export DJANGO_SETTINGS_MODULE=config.settings
+
+python manage.py reset_users
+
+python manage.py update_rates
+
+coverage run manage.py test -v 2
+
+coverage html
