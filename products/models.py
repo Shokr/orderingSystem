@@ -55,21 +55,3 @@ class Product(Model):
     @property
     def plain_text_description(self) -> str:
         return self.description
-
-
-
-
-#     def purchase_product(self, customer, qty):
-#         self.qty += qty
-#         return self.customers.add(customer)
-#
-#     def get_purchased_products(self, customer):
-#         return self.filter(customers__in=customer)
-#
-#     def get_total_money_spent(self, customer):
-#         return self.filter(customers__in=customer).aggregate(Sum('price'))
-#
-#     def get_total_revenue(self):
-#         total_purchased_products = self.objects.filter(qty__gt=0)
-#         pass
-# #

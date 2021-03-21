@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Extra
+    # Middleware to get request info in log
     "users.middleware.MetricLogMiddleware",
 ]
 
@@ -208,6 +208,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    # All APIs should have a rate limiting 5 requests per minute.
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle',
@@ -244,8 +245,10 @@ CURRENCIES = ('USD', 'EUR')
 CURRENCY_CHOICES = [('USD', 'USD $'), ('EUR', 'EUR €')]
 EXCHANGE_BACKEND = 'djmoney.contrib.exchange.backends.FixerBackend'
 
+# Fixer API Key for currency conversion.
 FIXER_ACCESS_KEY = '0636da3b0c32fde24f84a0e2d7e4795f'
 
+# openapi setting
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'Basic': {

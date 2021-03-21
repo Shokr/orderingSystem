@@ -15,20 +15,20 @@ class ProductViewSet(viewsets.ModelViewSet):
     ProductViewSet:
         Admin Api to deal with products.
 
-    retrieve:
-    Allows admin user to retrieve the given Product.
+        retrieve:
+        Allows admin user to retrieve the given Product.
 
-    list:
-    Allows admin user to retrieve a list of all Products that exist
+        list:
+        Allows admin user to retrieve a list of all Products that exist
 
-    create:
-    Allows admin user to create a Product to a normal user
+        create:
+        Allows admin user to create a Product to a normal user
 
-    update:
-    Allows admin user to modify a Product that already exists
+        update:
+        Allows admin user to modify a Product that already exists
 
-    destroy:
-    Allows admin user to delete a Product that already exists
+        destroy:
+        Allows admin user to delete a Product that already exists
     """
 
     queryset = Product.objects.all()
@@ -63,6 +63,7 @@ class AllProductsViewSet(viewsets.ReadOnlyModelViewSet):
 
     # queryset = Product.objects.get_queryset()
 
+    # user currency might be different from product currency so converte to his currency.
     def get_queryset(self):
         user_currency = User.objects.filter(pk=self.request.user.id).values_list('currency')
         user_currency = user_currency[0][0]

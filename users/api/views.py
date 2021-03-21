@@ -9,6 +9,9 @@ from .serializers import *
 
 class UserViewSet(viewsets.ModelViewSet):
     """
+    UserViewSet:
+        User management apis
+
     retrieve:
     Allows admin user to retrieve the given User.
 
@@ -32,6 +35,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class UserRegistrationAPIView(CreateAPIView):
+    """
+    Customer signup api:
+        Create Customer
+    """
     authentication_classes = ()
     permission_classes = ()
     serializer_class = UserRegistrationSerializer
@@ -51,6 +58,9 @@ class UserRegistrationAPIView(CreateAPIView):
 
 
 class UserLoginAPIView(GenericAPIView):
+    """
+    user login api
+    """
     authentication_classes = ()
     permission_classes = ()
     serializer_class = UserLoginSerializer
@@ -72,6 +82,9 @@ class UserLoginAPIView(GenericAPIView):
 
 
 class UserTokenAPIView(RetrieveDestroyAPIView):
+    """
+    token api
+    """
     lookup_field = "key"
     serializer_class = TokenSerializer
     queryset = Token.objects.all()

@@ -16,6 +16,7 @@ router.register("products", ProductViewSet, basename='products')
 router.register("get_all_products", AllProductsViewSet, basename='get_all_products')
 
 urlpatterns = [
+    # Orders API links
     path('get_purchased_products', PurchasedProductsViewSet.as_view(), name="get_purchased_products"),
     path('purchase_product', PurchaseProductAPIView.as_view(), name="purchase_product"),
     path('get_total_revenue', GetTotalRevenueAPIView.as_view(), name="get_total_revenue"),

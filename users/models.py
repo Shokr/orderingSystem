@@ -74,18 +74,6 @@ class Admin(User):
     base_type = User.Types.ADMIN
     objects = AdminManager()
 
-    # @staticmethod
-    # def has_perm(perm, obj=None):
-    #     # "Does the user have a specific permission?"
-    #     # Simplest possible answer: Yes, always
-    #     return True
-    #
-    # @staticmethod
-    # def has_module_perms(app_label):
-    #     # "Does the user have permissions to view the app `app_label`?"
-    #     # Simplest possible answer: Yes, always
-    #     return True
-
     class Meta:
         proxy = True
 
@@ -96,12 +84,3 @@ class Customer(User):
 
     class Meta:
         proxy = True
-
-
-
-        # if self.base_type == User.Types.CUSTOMER:
-        #     self.is_superuser = False
-        #     self.is_staff = False
-        # else:
-        #     self.is_superuser = True
-        #     self.is_staff = True
